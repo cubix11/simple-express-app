@@ -1,0 +1,9 @@
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
+|import_router|const router = require('./routes');
+|packages|
+|middlewares|
+|import_router|app.use(router);
+|router|app.get('/', (req, res) => res.send('Hello World'));
+app.listen(PORT, () => console.log('Listening on port', PORT));
