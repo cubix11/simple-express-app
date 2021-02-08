@@ -125,7 +125,7 @@ async function prompt() {
         path += i + '/';
         fs.mkdirSync(path);
     };
-    extension === 'ts' ? cmd.run('npm install -g typescript') : '';
+    extension === 'ts' ? cmd.run(`npm install -g typescript && cd ${folder} && tsc --init`) : '';
     let list = [];
     options.forEach(option => options_code[option] ? list.push(options_code[option]) : '');
     const packages = {
@@ -202,7 +202,6 @@ async function prompt() {
     final = final.replaceAll('|router|', '').replaceAll('|import_router|', '');
     fs.writeFile(`${folder}/server.js`, '', () => '');
     console.log('Installing dependencies...');
-    if(extension === 'ts') cmd.run(`cd ${folder} && tsc --init`);
     cmd.run(`cd ${folder} && npm init -y && npm install ${packages[extension].join(' ')}`, () => {
         console.log('Installed dependencies:');
         extension === 'ts' ? console.log('+ tsc') : '';
