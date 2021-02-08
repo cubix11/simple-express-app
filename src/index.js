@@ -202,13 +202,13 @@ async function prompt() {
     final = final.replaceAll('|router|', '').replaceAll('|import_router|', '');
     fs.writeFile(`${folder}/server.js`, '', () => '');
     console.log('Installing dependencies...');
+    extension === 'ts' ? cmd.run(`cd ${folder} && tsc`) : '';
     cmd.run(`cd ${folder} && npm init -y && npm install ${packages[extension].join(' ')}`, () => {
         console.log('Installed dependencies:');
         extension === 'ts' ? console.log('+ tsc') : '';
         for(let package of packages[extension]) {
             console.log('+', package);
         };
-        extension === 'ts' ? console.log('\nCompile your typescript code with tsc --watch') : '';
         console.log('Run the program with npm start');
     });
     fs.writeFile(`${folder}/server.${extension}`, final, () => '');
