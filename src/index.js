@@ -209,7 +209,7 @@ async function prompt() {
             console.log('+', package);
         };
         extension === 'ts' ? console.log('\nCompile your typescript code with tsc --watch') : '';
-        console.log('Run program with npm start');
+        console.log('Run the program with npm start');
     });
     fs.writeFile(`${folder}/server.${extension}`, final, () => '');
 };
