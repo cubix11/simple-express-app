@@ -92,7 +92,7 @@ function getFileData() {
 getFileData();
 
 async function prompt() {
-    let { options, folder } = await inquirer.prompt([
+    let { options, folder, port } = await inquirer.prompt([
         {
             type: 'input',
             name: 'folder',
@@ -100,6 +100,16 @@ async function prompt() {
             validate: input => {
                 if(!input) return 'Please enter a folder';
                 if(input.includes('.')) return 'Folders cannot contain dots';
+                return true;
+            }
+        },
+        {
+            type: 'input',
+            name: 'port',
+            message: 'What is the port that you want to listen to?',
+            validate: port => {
+                if(isNaN(port)) return 'Port is not a number';
+                if(port.length < 4 || port.length > 5) return 'Port can only be 4 or 5 characters'
                 return true;
             }
         },
@@ -187,9 +197,9 @@ async function prompt() {
         uses.push(item[2]);
     });
     gets = gets.join('\n');
-    server = server.replace('|packages|', gets);
     uses = uses.join('\n');
-    server = server.replace('|middlewares|', uses);
+    server = server.replace('|PORT|', port).replace('|packages|', gets).replace('|middlewares|', uses);
+    //server = server.replace('|middlewares|', uses);
     const servers_json = server.split('\n');
     let final;
     servers_json.forEach(line => {
