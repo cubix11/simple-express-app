@@ -2,7 +2,7 @@
 import express from 'express';
 |packages|
 const app: express.Application = express();
-const PORT: number | string = process.env.PORT || 3000;
+const PORT: number | string = process.env.PORT || |PORT|;
 |middlewares|
 |import_router|app.use(router)
 |router|app.get('/', (req: express.Request, res: express.Response): void => { res.send('Hello World') });
