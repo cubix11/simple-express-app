@@ -1,6 +1,6 @@
 {
   "name": "simple-express-app",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "main": "index.js",
   "author": "Ishan K.",
   "license": "ISC",
