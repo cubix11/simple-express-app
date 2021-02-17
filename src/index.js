@@ -199,7 +199,6 @@ async function prompt() {
     gets = gets.join('\n');
     uses = uses.join('\n');
     server = server.replace('|PORT|', port).replace('|packages|', gets).replace('|middlewares|', uses);
-    //server = server.replace('|middlewares|', uses);
     const servers_json = server.split('\n');
     let final;
     servers_json.forEach(line => {
@@ -210,6 +209,12 @@ async function prompt() {
     });
     final = servers_json.join('\n');
     final = final.replaceAll('|router|', '').replaceAll('|import_router|', '');
+    const { additionalPackages } = await inquirer.prompt({
+        name: 'additionalPackages',
+        message: 'Any additional dependencies seperated by spaces:',
+        type: 'input'
+    });
+    packages[extension] = packages[extension].concat(additionalPackages.split(' '));
     fs.writeFile(`${folder}/server.js`, '', () => '');
     console.log('Installing dependencies...');
     extension === 'ts' ? cmd.run(`cd ${folder} && tsc`) : '';
