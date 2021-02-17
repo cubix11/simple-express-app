@@ -7,7 +7,8 @@ const path = require('path');
 let javascript_app,
     typescript_app,
     typescript_router,
-    javascript_router;
+    javascript_router,
+    gitignore;
 function trimChar(string, charToRemove) {
     while(string.charAt(0)==charToRemove) {
         string = string.substring(1);
@@ -87,6 +88,7 @@ function getFileData() {
     fs.readFile(path.join(__dirname, 'placeholders', 'javascript_router.txt'), 'utf-8', (err, data) => javascript_router = data);
     fs.readFile(path.join(__dirname, 'placeholders', 'typescript_app.txt'), 'utf-8', (err, data) => typescript_app = data);
     fs.readFile(path.join(__dirname, 'placeholders', 'typescript_router.txt'), 'utf-8', (err, data) => typescript_router = data);
+    fs.readFile(path.join(__dirname, 'placeholders', 'gitignore.txt'), 'utf-8', (err, data) => gitignore = data);
 };
 
 getFileData();
@@ -216,13 +218,14 @@ async function prompt() {
     });
     packages[extension] = packages[extension].concat(additionalPackages.split(' '));
     fs.writeFile(`${folder}/server.js`, '', () => '');
+    fs.writeFile(`${folder}/.gitignore`, gitignore, () => '');
     console.log('Installing dependencies...');
     extension === 'ts' ? cmd.run(`cd ${folder} && tsc`) : '';
     cmd.run(`cd ${folder} && npm init -y && npm install ${packages[extension].join(' ')}`, () => {
         console.log('Installed dependencies:');
         extension === 'ts' ? console.log('+ tsc') : '';
         for(let package of packages[extension]) {
-            console.log('+', package);
+            if(package) console.log('+', package);
         };
         console.log('Run the program with npm start');
     });
