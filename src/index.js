@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-
 const inquirer = require('inquirer');
 const cmd = require('node-cmd');
 const fs = require('fs');
@@ -82,7 +81,6 @@ const options_code = {
         "app.use(express.json());"
     ]
 };
-console.log(__dirname)
 function getFileData() {
     fs.readFile(path.join(__dirname, 'placeholders', 'javascript_app.txt'), 'utf-8', (err, data) => javascript_app = data);
     fs.readFile(path.join(__dirname, 'placeholders', 'javascript_router.txt'), 'utf-8', (err, data) => javascript_router = data);
