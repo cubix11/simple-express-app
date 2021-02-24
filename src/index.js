@@ -127,6 +127,7 @@ async function prompt() {
             ]
         }
     ]);
+
     const extension = options.includes('Typescript') ? 'ts' : 'js';
     folder = trimChar(folder.replace('\\', '/').trim(), '/');
     let path = '';
